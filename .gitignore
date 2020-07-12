@@ -1,9 +1,9 @@
 # dependencies
-/node_modules
+node_modules/
 
 
 #global variables
-/variables.env
+variables.env/
 
 #history
-/.history
+.history/

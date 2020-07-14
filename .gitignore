@@ -3,7 +3,7 @@ node_modules/
 
 
 #global variables
-/variables.env
+variables.env
 
 #history
 .history/

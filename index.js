@@ -11,10 +11,8 @@ connectDB();
 // Application port
 const PORT = process.env.PORT || 4000;
 
-//Main page
-app.get('/', (req, res) => {
-    res.send('hello world')
-})
+//import routes
+app.use('/api/users', require('./routes/users'));
 
 //init app
 app.listen(PORT, () => {

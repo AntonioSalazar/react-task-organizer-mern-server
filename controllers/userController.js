@@ -1,4 +1,5 @@
-const User = require('../models/User')
+const User = require('../models/User');
+const bcryptjs = require('bcryptjs');
 
 exports.createUser = async (req, res) => {
 
@@ -17,6 +18,10 @@ exports.createUser = async (req, res) => {
         //create the new user into DB
         user = new User(req.body);
 
+        //hash password
+        const salt = await bcryptjs.genSalt(10);
+        user.password = await bcryptjs.hash(password, salt)
+
         //save the new user
         await user.save()
 
@@ -24,7 +29,7 @@ exports.createUser = async (req, res) => {
         //confirmation messaage
         res.json({msg: "User has been created succesfully"})
     } catch (error) {
-        console.log(error);;
+        console.log(error);
         res.status(400).send('There was an error, we were not able to save the new user information')
     }
 }

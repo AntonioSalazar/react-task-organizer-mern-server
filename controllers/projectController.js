@@ -57,13 +57,20 @@ exports.updateProject = async (req, res) => {
     try {
         //check the id
 
+        let project = await Project.findById(req.params.id);
         //if project exists or not
-
+        if(!project){
+            return res.status(404).json({msg: 'Project not found'})
+        }
         //verify project author
+        if(project.author.toString() !== req.user.id){
+            return res.status(401).json({msg: 'Not authorized to edit'})
+        }
 
         //update
+        project = await Project.findByIdAndUpdate({_id: req.params.id}, { $set: newProject}, {new: true})
+        res.json({project})
 
-        
     } catch (error) {
         console.log(error);
         res.status(500).send('Server Error')

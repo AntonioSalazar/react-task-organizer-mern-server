@@ -33,5 +33,11 @@ router.put('/:id',
     projectController.updateProject
 )
 
+//delete a project
+router.delete('/:id',
+    auth,
+    projectController.deleteProject
+)
+
 
 module.exports = router;

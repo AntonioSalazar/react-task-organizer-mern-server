@@ -10,9 +10,16 @@ const taskController = require('../controllers/taskController');
 router.post("/", 
     auth,
     [
-        check("name", "Task name is mandatory").not().isEmpty()
+        check("name", "Task name is mandatory").not().isEmpty(),
+        check("project", "project name is mandatory").not().isEmpty()
     ],      
     taskController.createTask
+)
+
+//get tasks per project 
+router.get('/',
+    auth,
+    taskController.getTasks
 )
 
 module.exports = router;

@@ -94,3 +94,31 @@ exports.uptadeTask = async (req, res) => {
         res.status(500).send('there was an error')
     }
 }
+
+exports.deleteTask = async (req, res) => {
+    try {
+        //extract the project
+        const { project } = req.body;
+
+        //check if the task exists or not
+        let task = await Task.findById(req.params.id)
+
+        if(!task){
+            return res.status(404).json({msg: "Task doesnt exists"})
+        }
+
+        const projectExists = await Project.findById(project)
+
+        //check if current project belongs to the authenticated user
+        if(projectExists.author.toString() !== req.user.id){
+            return res.status(401).json({msg: 'Not authorized'})
+        }
+        
+        //delete task
+        await Task.findOneAndRemove({_id: req.params.id})
+        res.json({msg: "task has been deleted"})
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('there was an error')
+    }
+}

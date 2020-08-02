@@ -39,7 +39,6 @@ exports.getTasks = async( req, res ) => {
 
     try {
         //extract the project
-        console.log(req.body);
         const { project } = req.body;
         const projectExists = await Project.findById(project)
         if(!projectExists){
@@ -56,5 +55,42 @@ exports.getTasks = async( req, res ) => {
     } catch (error) {
         console.log(error);
         res.status(500).send("There was an error")
+    }
+}
+
+exports.uptadeTask = async (req, res) => {
+    try {
+        //extract the project
+        const { project, name, state } = req.body;
+
+        //check if the task exists or not
+        let task = await Task.findById(req.params.id)
+
+        if(!task){
+            return res.status(404).json({msg: "Task doesnt exists"})
+        }
+
+        const projectExists = await Project.findById(project)
+
+        //check if current project belongs to the authenticated user
+        if(projectExists.author.toString() !== req.user.id){
+            return res.status(401).json({msg: 'Not authorized'})
+        }
+        
+        //create an object with the new information
+        const newTask = {}
+        if(name){
+            newTask.name = name;
+        }
+        if(state){
+            newTask.state = state
+        }
+
+        //save new task
+        task = await Task.findByIdAndUpdate({_id : req.params.id}, newTask, { new: true})
+        res.json({task})
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('there was an error')
     }
 }

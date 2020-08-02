@@ -22,4 +22,10 @@ router.get('/',
     taskController.getTasks
 )
 
+//update a task
+router.put('/:id',
+    auth,
+    taskController.uptadeTask
+)
+
 module.exports = router;

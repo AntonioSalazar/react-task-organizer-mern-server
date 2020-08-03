@@ -10,7 +10,7 @@ const userController = require('../controllers/userController');
 //----> api/users  
 router.post("/", 
     [
-        check('name', 'Username is mandatory').not().isEmpty(),
+        check('username', 'Username is mandatory').not().isEmpty(),
         check('email', 'Add a valid email').isEmail(),
         check('password', 'Password needs to have a minimum of 6 characters').isLength({min: 6})
     ],

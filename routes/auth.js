@@ -6,6 +6,7 @@ const { check } = require('express-validator');
 //controller
 const authController = require('../controllers/authController');
 
+
 //auth a user
 //----> api/auth  
 router.post("/", 
@@ -15,5 +16,11 @@ router.post("/",
     ],
     authController.authenticateUser
 );
+
+//login - gets authenticated user
+router.get('/',
+    auth,
+    authController.authenticatedUser
+)
 
 module.exports = router;

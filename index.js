@@ -25,6 +25,6 @@ app.use('/api/tasks', require('./routes/tasks'));
 
 
 //init app
-app.listen(PORT, () => {
-    console.log(`Server is up and running, port: ${PORT}`);
+app.listen(port, '0.0.0.0',() => {
+    console.log(`Server is up and running, port: ${port}`);
 })
